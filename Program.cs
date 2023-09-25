@@ -1,3 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using AppB2C2.Models;
+
+Console.WriteLine("erm ... programma doet iets");
+//db = new();
+//Console.WriteLine(value: $"Provider: {db.Database.ProviderName}");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,4 +29,4 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.Run();
+app.Run(); 
