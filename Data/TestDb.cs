@@ -32,9 +32,6 @@ namespace AppB2C2.Data
 				.Property(u => u.UserName)
 				.IsRequired()
 				.HasMaxLength(50);
-
-            modelBuilder.Entity<CollectionItem>()
-                .HasKey(i => i.ItemId);
 			
 			modelBuilder.Entity<CollectionItem>()
 				.HasOne(ci => ci.Collection)
@@ -47,6 +44,9 @@ namespace AppB2C2.Data
 				.WithMany(u => u.Collections)
 				.HasForeignKey(ui => ui.FornCollectionId)
 				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<CollectionItem>()
+				.HasKey(i => i.ItemId);
 
 			modelBuilder.Entity<Collection>()
 				.HasKey(c => c.CollectionId);
