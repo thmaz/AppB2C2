@@ -10,8 +10,8 @@ namespace AppB2C2.Models
 		public DateTime CreatedOn { get; set; } = DateTime.Now;
 		public string? ItemDescription { get; set; }
 		public int ReleaseDate { get; set; }
-		public int EstimatedPrice { get; set; }
-		public int CollectionId { get; set; } //foreign key
+		public float EstimatedPrice { get; set; }
+		public int FornItemId { get; set; } //foreign key
 		public Collection Collection { get; set; }
 	}
 }

@@ -39,13 +39,13 @@ namespace AppB2C2.Data
 			modelBuilder.Entity<CollectionItem>()
 				.HasOne(ci => ci.Collection)
 				.WithMany(c => c.CollectionItems)
-				.HasForeignKey(ci => ci.CollectionId)
+				.HasForeignKey(ci => ci.FornItemId)
 				.OnDelete(DeleteBehavior.Restrict);
 
 			modelBuilder.Entity<Collection>()
 				.HasOne(ui => ui.User)
 				.WithMany(u => u.Collections)
-				.HasForeignKey(ui => ui.ForCollectionId)
+				.HasForeignKey(ui => ui.FornCollectionId)
 				.OnDelete(DeleteBehavior.Restrict);
 
 			modelBuilder.Entity<Collection>()
@@ -63,7 +63,6 @@ namespace AppB2C2.Data
 				{
 					ItemId = 2,
 					ItemName = "Item Test",
-					CollectionId = 1
 				});
 
 			modelBuilder.Entity<Collection>().HasData(

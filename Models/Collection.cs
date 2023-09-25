@@ -6,7 +6,7 @@ namespace AppB2C2.Models
     public class Collection
     {
         [Key] public int CollectionId { get; set; } //primary key
-        public int ForCollectionId { get; set; } //foreign key
+        public int FornCollectionId { get; set; } //foreign key
         [Required] public string? CollectionName { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public string? CollectionDescription { get; set; }
