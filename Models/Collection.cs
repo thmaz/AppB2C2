@@ -12,7 +12,7 @@ namespace AppB2C2.Models
         public string? CollectionDescription { get; set; }
         public int? AddedItems { get; set; }
 
-        public ICollection<CollectionItem> CollectionItems { get; set; }
-        public User User { get; set; }
+        public ICollection<CollectionItem>? CollectionItems { get; set; }
+        public User? User { get; set; }
     }
 }

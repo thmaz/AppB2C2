@@ -12,6 +12,6 @@ namespace AppB2C2.Models
 		public int ReleaseDate { get; set; }
 		public float EstimatedPrice { get; set; }
 		public int FornItemId { get; set; } //foreign key
-		public Collection Collection { get; set; }
+		public Collection? Collection { get; set; }
 	}
 }
