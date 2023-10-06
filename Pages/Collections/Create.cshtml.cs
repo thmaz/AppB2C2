@@ -20,7 +20,7 @@ namespace AppB2C2.Pages.Collections
 
         public IActionResult OnGet()
         {
-        ViewData["FornCollectionId"] = new SelectList(_context.Users, "UserId", "UserName");
+        ViewData["CollectionId"] = new SelectList(_context.Users, "UserId", "UserName");
             return Page();
         }
 

@@ -5,7 +5,7 @@ namespace AppB2C2.Models
 {
     public class User
     {
-        public int UserId { get; set; } // foreign key
+        public int UserId { get; set; }
         public string? UserName { get; set; }
         public string? MailAdress { get; set; }
         public string? UserPassword { get; set; }

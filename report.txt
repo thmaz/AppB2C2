@@ -1,7 +1,6 @@
 To do:
 -Linking tables
 -Configuring foreign keys
--Bootswatch (bootstrap.css, bootstrap.min.css; check downloads)
 -User authentication?
 
 

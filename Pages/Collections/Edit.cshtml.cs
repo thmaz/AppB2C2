@@ -35,7 +35,7 @@ namespace AppB2C2.Pages.Collections
                 return NotFound();
             }
             Collection = collection;
-           ViewData["FornCollectionId"] = new SelectList(_context.Users, "UserId", "UserName");
+           ViewData["CollectionId"] = new SelectList(_context.Users, "UserId", "UserName");
             return Page();
         }
 

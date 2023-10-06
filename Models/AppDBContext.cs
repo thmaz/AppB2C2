@@ -31,7 +31,7 @@ namespace AppB2C2.Models
             modelBuilder.Entity<CollectionItem>()
                 .HasOne(ci => ci.Collection)
                 .WithMany(c => c.CollectionItems)
-                .HasForeignKey(ci => ci.FornItemId)
+                .HasForeignKey(ci => ci.ItemId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Collection>()
@@ -45,7 +45,7 @@ namespace AppB2C2.Models
             modelBuilder.Entity<Collection>()
                 .HasOne(ui => ui.User)
                 .WithMany(u => u.Collections)
-                .HasForeignKey(ui => ui.FornCollectionId)
+                .HasForeignKey(ui => ui.CollectionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
