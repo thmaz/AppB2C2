@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppB2C2.Models
 {
-    public class User
+    public class DjUser
     {
-        public int UserId { get; set; }
+        [Required] public int UserId { get; set; }
         public string? UserName { get; set; }
         public string? MailAdress { get; set; }
         public string? UserPassword { get; set; }

@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.CollectionItem[0].EstimatedPrice)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CollectionItem[0].Collection)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -48,6 +51,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EstimatedPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Collection.CollectionId)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ItemId">Edit</a> |

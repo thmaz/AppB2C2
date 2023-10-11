@@ -20,6 +20,7 @@ namespace AppB2C2.Pages.CollectionItems
 
         public IActionResult OnGet()
         {
+        ViewData["CollectionId"] = new SelectList(_context.Collections, "CollectionId", "CollectionId");
             return Page();
         }
 

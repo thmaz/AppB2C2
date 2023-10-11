@@ -24,7 +24,8 @@ namespace AppB2C2.Pages.CollectionItems
         {
             if (_context.CollectionItems != null)
             {
-                CollectionItem = await _context.CollectionItems.ToListAsync();
+                CollectionItem = await _context.CollectionItems
+                .Include(c => c.Collection).ToListAsync();
             }
         }
     }

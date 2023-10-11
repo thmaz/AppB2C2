@@ -35,6 +35,7 @@ namespace AppB2C2.Pages.CollectionItems
                 return NotFound();
             }
             CollectionItem = collectionitem;
+           ViewData["CollectionId"] = new SelectList(_context.Collections, "CollectionId", "CollectionId");
             return Page();
         }
 

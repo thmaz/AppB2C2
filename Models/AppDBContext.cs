@@ -7,7 +7,7 @@ namespace AppB2C2.Models
 	{
 		public DbSet<CollectionItem> CollectionItems { get; set; }
 		public DbSet<Collection> Collections { get; set; }
-		public DbSet<User> Users { get; set; }
+		public DbSet<DjUser> DjUsers { get; set; }
 
         public AppDBContext(DbContextOptions<AppDBContext> contextOptions) : base(contextOptions)
         {
@@ -18,49 +18,33 @@ namespace AppB2C2.Models
 			string connection = @"Data Source=.;Initial Catalog=DjDb;Integrated Security=true;TrustServerCertificate=True;";
 			optionsBuilder.UseSqlServer(connection);
 		}
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-            modelBuilder.Entity<CollectionItem>()
-                .Property(i => i.ItemName)
-                .IsRequired()
-                .HasMaxLength(50);
 
-            modelBuilder.Entity<CollectionItem>()
-                .HasKey(i => i.ItemId);
-
-            modelBuilder.Entity<CollectionItem>()
-                .HasOne(ci => ci.Collection)
-                .WithMany(c => c.CollectionItems)
-                .HasForeignKey(ci => ci.ItemId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Collection>()
-                .Property(c => c.CollectionName)
-                .IsRequired()
-                .HasMaxLength(50);
+                .HasKey(e => e.CollectionId);
 
-            modelBuilder.Entity<Collection>()
-                .HasKey(c => c.CollectionId);
+            modelBuilder.Entity<DjUser>()
+                .HasKey(e => e.UserId);
 
-            modelBuilder.Entity<Collection>()
-                .HasOne(ui => ui.User)
-                .WithMany(u => u.Collections)
-                .HasForeignKey(ui => ui.CollectionId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<CollectionItem>()
+                .HasKey(e => e.ItemId);
 
-            modelBuilder.Entity<User>()
-                .Property(u => u.UserName)
-                .IsRequired()
-                .HasMaxLength(50);
+            modelBuilder.Entity<DjUser>()
+                .HasMany(e => e.Collections)
+                .WithOne(e => e.DjUser)
+                .HasForeignKey(e => e.CollectionId)
+                .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .HasKey(u => u.UserId);
+            modelBuilder.Entity<CollectionItem>()
+                .HasOne(e => e.Collection)
+                .WithMany(e => e.CollectionItems)
+                .HasForeignKey(e => e.CollectionId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
 
-            SeedData(modelBuilder);
+
         }
-		private static void SeedData(ModelBuilder modelBuilder)
-		{
 
-		}
-	}
+    }
 }

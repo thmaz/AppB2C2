@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppB2C2.Migrations
 {
     /// <inheritdoc />
-    public partial class AppDbInitialMigration : Migration
+    public partial class NewMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,9 @@ namespace AppB2C2.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    MailAdress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MailAdress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedCollections = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -31,23 +31,20 @@ namespace AppB2C2.Migrations
                 name: "Collections",
                 columns: table => new
                 {
-                    CollectionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FornCollectionId = table.Column<int>(type: "int", nullable: false),
-                    CollectionName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CollectionId = table.Column<int>(type: "int", nullable: false),
+                    CollectionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CollectionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddedItems = table.Column<int>(type: "int", nullable: true)
+                    CollectionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Collections", x => x.CollectionId);
                     table.ForeignKey(
-                        name: "FK_Collections_Users_FornCollectionId",
-                        column: x => x.FornCollectionId,
+                        name: "FK_Collections_Users_CollectionId",
+                        column: x => x.CollectionId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,33 +53,28 @@ namespace AppB2C2.Migrations
                 {
                     ItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReleaseDate = table.Column<int>(type: "int", nullable: false),
                     EstimatedPrice = table.Column<float>(type: "real", nullable: false),
-                    FornItemId = table.Column<int>(type: "int", nullable: false)
+                    CollectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CollectionItems", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_CollectionItems_Collections_FornItemId",
-                        column: x => x.FornItemId,
+                        name: "FK_CollectionItems_Collections_CollectionId",
+                        column: x => x.CollectionId,
                         principalTable: "Collections",
                         principalColumn: "CollectionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollectionItems_FornItemId",
+                name: "IX_CollectionItems_CollectionId",
                 table: "CollectionItems",
-                column: "FornItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Collections_FornCollectionId",
-                table: "Collections",
-                column: "FornCollectionId");
+                column: "CollectionId");
         }
 
         /// <inheritdoc />

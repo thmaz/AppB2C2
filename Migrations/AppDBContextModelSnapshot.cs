@@ -27,26 +27,16 @@ namespace AppB2C2.Migrations
                     b.Property<int>("CollectionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AddedItems")
-                        .HasColumnType("int");
-
                     b.Property<string>("CollectionDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CollectionItemItemId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CollectionName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("CollectionId");
-
-                    b.HasIndex("CollectionItemItemId");
 
                     b.ToTable("Collections");
                 });
@@ -54,6 +44,12 @@ namespace AppB2C2.Migrations
             modelBuilder.Entity("AppB2C2.Models.CollectionItem", b =>
                 {
                     b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
+
+                    b.Property<int>("CollectionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -66,19 +62,19 @@ namespace AppB2C2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ReleaseDate")
                         .HasColumnType("int");
 
                     b.HasKey("ItemId");
 
+                    b.HasIndex("CollectionId");
+
                     b.ToTable("CollectionItems");
                 });
 
-            modelBuilder.Entity("AppB2C2.Models.User", b =>
+            modelBuilder.Entity("AppB2C2.Models.DjUser", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -93,9 +89,7 @@ namespace AppB2C2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserPassword")
                         .HasColumnType("nvarchar(max)");
@@ -107,26 +101,20 @@ namespace AppB2C2.Migrations
 
             modelBuilder.Entity("AppB2C2.Models.Collection", b =>
                 {
-                    b.HasOne("AppB2C2.Models.User", "User")
+                    b.HasOne("AppB2C2.Models.DjUser", "DjUser")
                         .WithMany("Collections")
                         .HasForeignKey("CollectionId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppB2C2.Models.CollectionItem", "CollectionItem")
-                        .WithMany()
-                        .HasForeignKey("CollectionItemItemId");
-
-                    b.Navigation("CollectionItem");
-
-                    b.Navigation("User");
+                    b.Navigation("DjUser");
                 });
 
             modelBuilder.Entity("AppB2C2.Models.CollectionItem", b =>
                 {
                     b.HasOne("AppB2C2.Models.Collection", "Collection")
                         .WithMany("CollectionItems")
-                        .HasForeignKey("ItemId")
+                        .HasForeignKey("CollectionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -138,7 +126,7 @@ namespace AppB2C2.Migrations
                     b.Navigation("CollectionItems");
                 });
 
-            modelBuilder.Entity("AppB2C2.Models.User", b =>
+            modelBuilder.Entity("AppB2C2.Models.DjUser", b =>
                 {
                     b.Navigation("Collections");
                 });
