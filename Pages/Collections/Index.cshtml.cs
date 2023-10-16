@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AppB2C2.Models;
 
-namespace AppB2C2.Pages.CollectionItems
+namespace AppB2C2.Pages.Collections
 {
     public class IndexModel : PageModel
     {
@@ -18,14 +18,14 @@ namespace AppB2C2.Pages.CollectionItems
             _context = context;
         }
 
-        public IList<CollectionItem> CollectionItem { get;set; } = default!;
+        public IList<Collection> Collection { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.CollectionItems != null)
+            if (_context.Collections != null)
             {
-                CollectionItem = await _context.CollectionItems
-                .Include(c => c.Collection).ToListAsync();
+                Collection = await _context.Collections
+                .Include(c => c.DjUser).ToListAsync();
             }
         }
     }

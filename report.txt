@@ -27,7 +27,3 @@ notes:
             </div>
         </nav>
 
-                    <div class="form-group">
-                <label asp-for="CollectionItem.CollItemId" class="control-label"></label>
-                <select asp-for="CollectionItem.CollItemId" class ="form-control" asp-items="ViewBag.CollItemId"></select>
-            </div>

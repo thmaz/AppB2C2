@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Pages\Collections\" />
+    <Folder Include="Pages\CollectionItems\" />
     <Folder Include="Pages\Users\" />
   </ItemGroup>
 

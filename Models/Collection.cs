@@ -5,7 +5,7 @@ namespace AppB2C2.Models
 {
     public class Collection
     {
-        [Required] public int CollectionId { get; set; } //primary key
+        public int CollectionId { get; set; } //primary key
         public string? CollectionName { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public string? CollectionDescription { get; set; }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AppB2C2.Models;
 
-namespace AppB2C2.Pages.CollectionItems
+namespace AppB2C2.Pages.Collections
 {
     public class DetailsModel : PageModel
     {
@@ -18,23 +18,23 @@ namespace AppB2C2.Pages.CollectionItems
             _context = context;
         }
 
-      public CollectionItem CollectionItem { get; set; } = default!; 
+      public Collection Collection { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.CollectionItems == null)
+            if (id == null || _context.Collections == null)
             {
                 return NotFound();
             }
 
-            var collectionitem = await _context.CollectionItems.FirstOrDefaultAsync(m => m.ItemId == id);
-            if (collectionitem == null)
+            var collection = await _context.Collections.FirstOrDefaultAsync(m => m.CollectionId == id);
+            if (collection == null)
             {
                 return NotFound();
             }
             else 
             {
-                CollectionItem = collectionitem;
+                Collection = collection;
             }
             return Page();
         }

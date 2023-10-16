@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AppB2C2.Models;
 
-namespace AppB2C2.Pages.CollectionItems
+namespace AppB2C2.Pages.Collections
 {
     public class CreateModel : PageModel
     {
@@ -20,23 +20,23 @@ namespace AppB2C2.Pages.CollectionItems
 
         public IActionResult OnGet()
         {
-        ViewData["CollectionId"] = new SelectList(_context.Collections, "CollectionId", "CollectionId");
+        ViewData["CollectionId"] = new SelectList(_context.DjUsers, "UserId", "UserId");
             return Page();
         }
 
         [BindProperty]
-        public CollectionItem CollectionItem { get; set; } = default!;
+        public Collection Collection { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.CollectionItems == null || CollectionItem == null)
+          if (!ModelState.IsValid || _context.Collections == null || Collection == null)
             {
                 return Page();
             }
 
-            _context.CollectionItems.Add(CollectionItem);
+            _context.Collections.Add(Collection);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

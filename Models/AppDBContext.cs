@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AppB2C2.Models;
 
 namespace AppB2C2.Models
 {
@@ -30,6 +29,10 @@ namespace AppB2C2.Models
             modelBuilder.Entity<CollectionItem>()
                 .HasKey(e => e.ItemId);
 
+            modelBuilder.Entity<Collection>()
+                .Property(e => e.CollectionId)
+                .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<DjUser>()
                 .HasMany(e => e.Collections)
                 .WithOne(e => e.DjUser)
@@ -42,8 +45,6 @@ namespace AppB2C2.Models
                 .HasForeignKey(e => e.CollectionId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
-
-
         }
 
     }

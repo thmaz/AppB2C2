@@ -1,0 +1,43 @@
+﻿@page
+@model AppB2C2.Pages.Collections.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Collection</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Collection.CollectionName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Collection.CollectionName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Collection.CreatedOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Collection.CreatedOn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Collection.CollectionDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Collection.CollectionDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Collection.DjUser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Collection.DjUser.UserId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Collection?.CollectionId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

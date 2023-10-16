@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppB2C2.Models;
 
-namespace AppB2C2.Pages.CollectionItems
+namespace AppB2C2.Pages.Collections
 {
     public class EditModel : PageModel
     {
@@ -20,22 +20,22 @@ namespace AppB2C2.Pages.CollectionItems
         }
 
         [BindProperty]
-        public CollectionItem CollectionItem { get; set; } = default!;
+        public Collection Collection { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.CollectionItems == null)
+            if (id == null || _context.Collections == null)
             {
                 return NotFound();
             }
 
-            var collectionitem =  await _context.CollectionItems.FirstOrDefaultAsync(m => m.ItemId == id);
-            if (collectionitem == null)
+            var collection =  await _context.Collections.FirstOrDefaultAsync(m => m.CollectionId == id);
+            if (collection == null)
             {
                 return NotFound();
             }
-            CollectionItem = collectionitem;
-           ViewData["CollectionId"] = new SelectList(_context.Collections, "CollectionId", "CollectionId");
+            Collection = collection;
+           ViewData["CollectionId"] = new SelectList(_context.DjUsers, "UserId", "UserId");
             return Page();
         }
 
@@ -48,7 +48,7 @@ namespace AppB2C2.Pages.CollectionItems
                 return Page();
             }
 
-            _context.Attach(CollectionItem).State = EntityState.Modified;
+            _context.Attach(Collection).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace AppB2C2.Pages.CollectionItems
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CollectionItemExists(CollectionItem.ItemId))
+                if (!CollectionExists(Collection.CollectionId))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace AppB2C2.Pages.CollectionItems
             return RedirectToPage("./Index");
         }
 
-        private bool CollectionItemExists(int id)
+        private bool CollectionExists(int id)
         {
-          return (_context.CollectionItems?.Any(e => e.ItemId == id)).GetValueOrDefault();
+          return (_context.Collections?.Any(e => e.CollectionId == id)).GetValueOrDefault();
         }
     }
 }
