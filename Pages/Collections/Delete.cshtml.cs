@@ -11,9 +11,9 @@ namespace AppB2C2.Pages.Collections
 {
     public class DeleteModel : PageModel
     {
-        private readonly AppB2C2.Models.AppDBContext _context;
+        private readonly AppDBContext _context;
 
-        public DeleteModel(AppB2C2.Models.AppDBContext context)
+        public DeleteModel(AppDBContext context)
         {
             _context = context;
         }

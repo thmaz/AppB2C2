@@ -3,20 +3,20 @@
 namespace AppB2C2.Models
 {
     public class AppDBContext : DbContext
-	{
-		public DbSet<CollectionItem> CollectionItems { get; set; }
-		public DbSet<Collection> Collections { get; set; }
-		public DbSet<DjUser> DjUsers { get; set; }
+    {
+        public DbSet<CollectionItem> CollectionItems { get; set; }
+        public DbSet<Collection> Collections { get; set; }
+        public DbSet<DjUser> DjUsers { get; set; }
 
         public AppDBContext(DbContextOptions<AppDBContext> contextOptions) : base(contextOptions)
         {
-        } 
+        }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			string connection = @"Data Source=.;Initial Catalog=DjDb;Integrated Security=true;TrustServerCertificate=True;";
-			optionsBuilder.UseSqlServer(connection);
-		}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string connection = @"Data Source=.;Initial Catalog=DjDb;Integrated Security=true;TrustServerCertificate=True;";
+            optionsBuilder.UseSqlServer(connection);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

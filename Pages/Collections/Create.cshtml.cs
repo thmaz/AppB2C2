@@ -11,9 +11,9 @@ namespace AppB2C2.Pages.Collections
 {
     public class CreateModel : PageModel
     {
-        private readonly AppB2C2.Models.AppDBContext _context;
+        private readonly AppDBContext _context;
 
-        public CreateModel(AppB2C2.Models.AppDBContext context)
+        public CreateModel(AppDBContext context)
         {
             _context = context;
         }

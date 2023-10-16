@@ -1,21 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using AppB2C2.Models;
+using AppB2C2.Data;
 
 namespace AppB2C2
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-
 			builder.Services.AddControllersWithViews();
 
-			builder.Services.AddDbContext<AppDBContext>(
+			builder.Services.AddDbContext<DjDbContext>(
 				DbContextOptions =>
 				DbContextOptions.UseSqlServer(
-					builder.Configuration.GetConnectionString("name=DjDb:DefaultConnection")));
+					builder.Configuration.GetConnectionString("DjDbConnectionString")));
 		
 			builder.Services.AddRazorPages();
 			

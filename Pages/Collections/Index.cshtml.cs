@@ -11,9 +11,9 @@ namespace AppB2C2.Pages.Collections
 {
     public class IndexModel : PageModel
     {
-        private readonly AppB2C2.Models.AppDBContext _context;
+        private readonly AppDBContext _context;
 
-        public IndexModel(AppB2C2.Models.AppDBContext context)
+        public IndexModel(AppDBContext context)
         {
             _context = context;
         }
