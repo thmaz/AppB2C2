@@ -37,13 +37,7 @@ namespace AppB2C2
 			app.MapRazorPages();
 			app.MapFallbackToPage("/Index");
 
-			/*app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapRazorPages();
-                endpoints.MapFallbackToPage("Index.cshtml");
-			}); */
-
-			app.MapControllerRoute(
+            app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
 
