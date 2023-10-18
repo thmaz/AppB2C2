@@ -41,10 +41,16 @@ namespace AppB2C2.Controllers
         [HttpGet]
         public IActionResult Details(string tagName)
         {
+            /*if (string.IsNullOrEmpty(tagName))
+            {
+                return BadRequest("Tag name required");
+            } */
+            
             var tag = djDbContext.ItemTags.FirstOrDefault(t => t.TagName == tagName);
 
             if (tag == null)
             {
+                Console.WriteLine($"Tag with tagName '{tagName}' not found.");
                 return NotFound();
             }
 
@@ -54,7 +60,17 @@ namespace AppB2C2.Controllers
                 DetailName = tag.DisplayName
             };
 
-            return View(tagDetailsViewModel);
+            return View("Details", tagDetailsViewModel);
         }
+
+        [HttpGet]
+        public IActionResult AllTags()
+        {
+            var allTags = djDbContext.ItemTags.ToList();
+            return View(allTags);
+        }
+
     }
 }
+
+

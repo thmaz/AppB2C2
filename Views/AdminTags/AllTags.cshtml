@@ -1,0 +1,14 @@
+﻿@model List<ItemTag>
+@using AppB2C2.Models.Domain
+
+
+<h1>All Tags</h1>
+
+<ul>
+    @foreach (var tag in Model)
+    {
+        <li>
+            <a asp-controller="AdminTags" asp-action="Details" asp-route-tagName="@tag.TagName">@tag.DisplayName</a>
+        </li>
+    }
+</ul>

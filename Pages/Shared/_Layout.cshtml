@@ -35,8 +35,17 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" 
-                                asp-area="" asp-controller="AdminTags"
+                                asp-area="" 
+                                asp-controller="AdminTags"
                                 asp-action="Add">Add Tag</a>
+                                <a class="dropdown-item"
+                                asp-area=""
+                                asp-controller="AdminTags"
+                                asp-action="Details">View Details</a>
+                                <a class="dropdown-item"
+                                asp-area=""
+                                asp-controller="AdminTags"
+                                asp-action="AllTags">View All Tags</a>
                             </div>
                         </li>
                     </ul>

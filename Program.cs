@@ -34,7 +34,7 @@ namespace AppB2C2
 
 			app.UseAuthorization();
 
-			app.MapRazorPages();
+			//app.MapRazorPages();
 			app.MapFallbackToPage("/Index");
 
             app.MapControllerRoute(
