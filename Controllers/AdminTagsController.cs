@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AppB2C2.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppB2C2.Controllers
 {
@@ -12,8 +13,10 @@ namespace AppB2C2.Controllers
         
         [HttpPost]
         [ActionName("Add")]
-        public IActionResult SubmitTag()
+        public IActionResult Add(AddTagRequest addTagRequest)
         {
+            var tagName = addTagRequest.TagName;
+            var displayName = addTagRequest.DisplayName;
             return View("Add");
         }
     }
