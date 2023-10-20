@@ -34,8 +34,27 @@ namespace AppB2C2
 
 			app.UseAuthorization();
 
-			//app.MapRazorPages();
-			app.MapFallbackToPage("/Index");
+            app.MapControllerRoute(
+				name: "musicitems",
+				pattern: "{controller=MusicItems}/{action=AllItems}/{id?}");
+            
+			app.MapControllerRoute(
+				name: "musicitems_delete",
+				pattern: "{controller=MusicItems}/{action=Delete}/{id?}"); 
+
+			app.MapControllerRoute(
+                name: "musicitems_deleteconfirmed",
+                pattern: "{controller=MusicItems}/{action=DeleteConfirmed}/{id?}");
+
+            app.MapControllerRoute(
+				name: "musicitems_details",
+				pattern: "{controller=MusicItems}/{action=DetailItem}/{id?}");
+
+            app.MapControllerRoute(
+                name: "admintags",
+                pattern: "{controller=AdminTags}/{action=AllTags}/{id?}");
+            
+            /*app.MapFallbackToPage("/Index"); */
 
             app.MapControllerRoute(
 				name: "default",

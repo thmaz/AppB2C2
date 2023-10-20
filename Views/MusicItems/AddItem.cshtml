@@ -1,0 +1,52 @@
+﻿@model AppB2C2.Models.ViewModels.AddMusicItemRequest
+
+<h1>Add Music Item</h1>
+
+<form method="post" asp-action="AddItem">
+    <div class="form-group">
+        <label for="ItemTitle">Title:</label>
+        <input type="text" id="ItemTitle" name="ItemTitle" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ItemDescription">Description:</label>
+        <input type="text" id="ItemDescription" name="ItemDescription" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ImageUrl">Image URL:</label>
+        <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Artist">Artist:</label>
+        <input type="text" id="Artist" name="Artist" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ItemContent">Content:</label>
+        <textarea id="ItemContent" name="ItemContent" class="form-control" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="UrlHandle">URL Handle:</label>
+        <input type="text" id="UrlHandle" name="UrlHandle" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Visible">Visible:</label>
+        <input type="checkbox" id="Visible" name="Visible" />
+    </div>
+
+    <div class="form-group">
+        <label for="DateAdded">Date Added:</label>
+        <input type="date" id="DateAdded" name="DateAdded" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ItemValue">Item Value:</label>
+        <input type="number" id="ItemValue" name="ItemValue" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Item</button>
+</form>

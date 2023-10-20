@@ -29,7 +29,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Items</a>
+                            <a class="nav-link" 
+                            asp-area=""
+                            asp-controller="MusicItems"
+                            asp-action="AllItems">Items</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -46,6 +49,15 @@
                                 asp-area=""
                                 asp-controller="AdminTags"
                                 asp-action="AllTags">View All Tags</a>
+                                <a class="dropdown-item"
+                                   asp-area=""
+                                   asp-controller="MusicItems"
+                                   asp-action="AddItem">Add Items</a>
+                                <a class="dropdown-item"
+                                    asp-area=""
+                                    asp-controller="MusicItems"
+                                    asp-action="Delete">Delete Items</a>
+
                             </div>
                         </li>
                     </ul>

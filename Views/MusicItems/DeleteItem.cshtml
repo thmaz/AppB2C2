@@ -1,0 +1,13 @@
+﻿@model AppB2C2.Models.Domain.MusicItem
+
+
+<h1>Delete Item</h1>
+<h2>Delete?</h2>
+<h3>Confirm delete</h3>
+<div>
+    <h4>Item Title: @Model.ItemTitle</h4>
+    <form asp-action="DeleteConfirmed" asp-route-itemid="@Model.Id" method="post">
+        <input type="submit" value="Delete" class="btn btn-danger"/>
+        <a asp-action="AllItems" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

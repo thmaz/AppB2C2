@@ -67,7 +67,7 @@ namespace AppB2C2.Controllers
         public IActionResult AllTags()
         {
             var allTags = djDbContext.ItemTags.ToList();
-            return View(allTags);
+            return View("AllTags", allTags);
         }
 
     }
