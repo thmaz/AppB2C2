@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AppB2C2.Migrations.DjDb
+namespace AppB2C2.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class RemovedJoinClass : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,13 +31,13 @@ namespace AppB2C2.Migrations.DjDb
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ItemTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Artist = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ItemContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UrlHandle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Visible = table.Column<bool>(type: "bit", nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ItemValue = table.Column<float>(type: "real", nullable: false)
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ItemValue = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>
                 {

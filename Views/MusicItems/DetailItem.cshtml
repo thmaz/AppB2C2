@@ -14,10 +14,24 @@
             <dd>@Model.ItemContent</dd>
 
             <dt>Item value (in euros):</dt>
-            <dd>@Model.ItemValue</dd>
+            <dd>@Model.ItemValue</dd>            
         </dl>
     </div>
 
+
+    @if (Model.Tags != null && Model.Tags.Any())
+    {
+        <div style="margin-top: 20px;">
+            <h3>Tags:</h3>
+            @foreach (var tag in Model.Tags)
+            {
+                <div style="display: inline-block; padding: 8px; margin: 4px; background-color: #66bb6a; color: #fff; border-radius: 5px;">
+                    @tag
+                </div>
+            }
+        </div>
+    }
+    
     @if (!string.IsNullOrEmpty(Model.ImageUrl))
     {
         <div style="flex-shrink: 0; margin-left: 20px;">

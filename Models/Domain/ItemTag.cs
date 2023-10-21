@@ -5,6 +5,7 @@
         public Guid Id { get; set; }
         public string TagName { get; set; }
         public string DisplayName { get; set; }
-        public ICollection<MusicItem> MusicItems { get; set; } // Many to to many relationship between MusicItem and ItemTag
+        public ICollection<MusicItem> MusicItems { get; set; }
+
     }
 }

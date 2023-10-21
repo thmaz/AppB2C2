@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AppB2C2.Migrations.DjDb
+namespace AppB2C2.Migrations
 {
     [DbContext(typeof(DjDbContext))]
-    [Migration("20231020134915_ImageMigration")]
-    partial class ImageMigration
+    [Migration("20231021135403_RemovedJoinClass")]
+    partial class RemovedJoinClass
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,6 @@ namespace AppB2C2.Migrations.DjDb
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemContent")

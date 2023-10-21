@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using AppB2C2.Models.Domain;
 using Microsoft.AspNetCore.Http;
 
 
@@ -17,5 +18,6 @@ namespace AppB2C2.Models.ViewModels
         public float? ItemValue { get; set; } // Value of item
         [DisplayName("Upload Image")]
         public IFormFile ImageFile {  get; set; } 
+        public List<Guid> TagIds { get; set; }
     }
 }

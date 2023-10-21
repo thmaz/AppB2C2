@@ -1,13 +1,8 @@
 ﻿using AppB2C2.Data;
 using AppB2C2.Models.Domain;
 using AppB2C2.Models.ViewModels;
-using System.IO;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
-using System.Net;
-using Microsoft.Extensions.Hosting;
-using AppB2C2.Migrations.DjDb;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppB2C2.Controllers
 {
@@ -25,12 +20,15 @@ namespace AppB2C2.Controllers
         [HttpGet]
         public IActionResult AddItem()
         {
+            ViewBag.Tags = djDbContext.ItemTags.ToList();
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddItem(AddMusicItemRequest addMusicItemRequest) 
+        public IActionResult AddItem(AddMusicItemRequest addMusicItemRequest, List<Guid> tagIds) 
         {
+           
+
             var musicItem = new MusicItem
             {
                 ItemTitle = addMusicItemRequest.ItemTitle,
@@ -57,8 +55,12 @@ namespace AppB2C2.Controllers
                 musicItem.ImageUrl = "/uploads/" + uniqueFileName;
             }
 
+            musicItem.ItemTags = djDbContext.ItemTags.Where(tag => tagIds.Contains(tag.Id)).ToList();
+            
             djDbContext.MusicItems.Add(musicItem);
             djDbContext.SaveChanges();
+
+
 
             return RedirectToAction("AllItems", musicItem);
         }
@@ -72,7 +74,11 @@ namespace AppB2C2.Controllers
                 return NotFound();
             }
 
-            var musicItem = djDbContext.MusicItems.Find(itemId);
+            var musicItem = djDbContext.MusicItems
+                .Include(item => item.ItemTags)
+                //.ThenInclude(tag => tag.TagName)
+                .FirstOrDefault(item => item.Id == itemId);
+            //.Find(itemId);
 
             if (musicItem == null) 
             {
@@ -89,7 +95,8 @@ namespace AppB2C2.Controllers
                 UrlHandle = musicItem.UrlHandle,
                 Visible = musicItem.Visible,
                 DateAdded = musicItem.DateAdded,
-                ItemValue = musicItem.ItemValue
+                ItemValue = musicItem.ItemValue,
+                Tags = musicItem.ItemTags.Select(tag => tag.TagName).ToList()
             };
 
             return View("DetailItem", musicItemDetailsViewModel);

@@ -11,5 +11,6 @@
         public bool Visible { get; set; } // Set to hide or show item to other users
         public DateTime? DateAdded { get; set; } // Date posted
         public float? ItemValue { get; set; } // Value of item
+        public List<string> Tags { get; set; }
     }
 }
