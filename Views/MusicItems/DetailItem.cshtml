@@ -1,23 +1,27 @@
 ﻿@model AppB2C2.Models.ViewModels.MusicItemDetailsViewModel
 
-<h1>Tag Details</h1>
+<div style="background-color: #f0f0f0; padding: 20px; border-radius: 10px; display: flex; align-items: center;">
+    <div style="flex: 1;">
+        <h1>@Model.ItemTitle</h1>
+        <dl>
+            <dt>Description:</dt>
+            <dd>@Model.ItemDescription</dd>
 
-<div>
-    <dl>
-        <dt>Title:</dt>
-        <dd>@Model.ItemTitle</dd>
+            <dt>Artist:</dt>
+            <dd>@Model.Artist</dd>
 
-        <dt>Description:</dt>
-        <dd>@Model.ItemDescription</dd>
+            <dt>Item content:</dt>
+            <dd>@Model.ItemContent</dd>
 
-        <dt>Artis:</dt>
-        <dd>@Model.Artist</dd>
+            <dt>Item value (in euros):</dt>
+            <dd>@Model.ItemValue</dd>
+        </dl>
+    </div>
 
-        <dt>Item content:</dt>
-        <dd>@Model.ItemContent</dd>
-
-        <dt>Item value (in euros):</dt>
-        <dd>@Model.ItemValue</dd>
-
-    </dl>
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <div style="flex-shrink: 0; margin-left: 20px;">
+            <img src="@Url.Content(Model.ImageUrl)" alt="Item Image" style="max-width: 500px; height:auto" />
+        </div>
+    }
 </div>

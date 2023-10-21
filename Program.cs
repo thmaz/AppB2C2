@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AppB2C2.Models;
 using AppB2C2.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppB2C2
 {
@@ -9,8 +10,6 @@ namespace AppB2C2
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
-
-			builder.Services.AddControllersWithViews();
 
 			builder.Services.AddDbContext<DjDbContext>(
 				DbContextOptions =>
@@ -35,6 +34,10 @@ namespace AppB2C2
 			app.UseAuthorization();
 
             app.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
 				name: "musicitems",
 				pattern: "{controller=MusicItems}/{action=AllItems}/{id?}");
             
@@ -54,11 +57,7 @@ namespace AppB2C2
                 name: "admintags",
                 pattern: "{controller=AdminTags}/{action=AllTags}/{id?}");
             
-            /*app.MapFallbackToPage("/Index"); */
-
-            app.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapFallbackToController("Index", "Home");
 
 			app.Run();
 		}

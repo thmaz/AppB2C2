@@ -1,0 +1,26 @@
+﻿@using AppB2C2.Models.Domain
+@model List<MusicItem>
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container">
+    <h1>Welcome to Music Collections</h1>
+
+    <div class="row">
+        @foreach (var musicItem in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@musicItem.ImageUrl" class="card-img-top" alt="Music Item Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@musicItem.ItemTitle</h5>
+                        <p class="card-text">@musicItem.ItemDescription</p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

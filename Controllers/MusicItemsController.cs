@@ -1,19 +1,25 @@
 ﻿using AppB2C2.Data;
 using AppB2C2.Models.Domain;
 using AppB2C2.Models.ViewModels;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using System.Net;
+using Microsoft.Extensions.Hosting;
+using AppB2C2.Migrations.DjDb;
 
 namespace AppB2C2.Controllers
 {
     public class MusicItemsController : Controller
     {
         private readonly DjDbContext djDbContext;
+        private readonly IHostEnvironment hostEnvironment;
 
-        public MusicItemsController(DjDbContext djDbContext)
+        public MusicItemsController(DjDbContext djDbContext, IHostEnvironment hostEnvironment)
         {
             this.djDbContext = djDbContext;
+            this.hostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -29,7 +35,6 @@ namespace AppB2C2.Controllers
             {
                 ItemTitle = addMusicItemRequest.ItemTitle,
                 ItemDescription = addMusicItemRequest.ItemDescription,
-                ImageUrl = addMusicItemRequest.ImageUrl,
                 Artist = addMusicItemRequest.Artist,
                 ItemContent = addMusicItemRequest.ItemContent,
                 UrlHandle = addMusicItemRequest.UrlHandle,
@@ -38,11 +43,26 @@ namespace AppB2C2.Controllers
                 ItemValue = addMusicItemRequest.ItemValue
             };
 
+            if (addMusicItemRequest.ImageFile != null && addMusicItemRequest.ImageFile.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(hostEnvironment.ContentRootPath, "wwwroot", "uploads");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + addMusicItemRequest.ImageFile.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    addMusicItemRequest.ImageFile.CopyTo(stream);
+                }
+
+                musicItem.ImageUrl = "/uploads/" + uniqueFileName;
+            }
+
             djDbContext.MusicItems.Add(musicItem);
             djDbContext.SaveChanges();
 
             return RedirectToAction("AllItems", musicItem);
         }
+
 
         [HttpGet]
         public IActionResult Details(Guid itemId) 
@@ -82,7 +102,6 @@ namespace AppB2C2.Controllers
             return View("AllItems", musicItems);
         }
 
-
         [HttpGet]
         public IActionResult Delete(Guid itemId)
         {
@@ -116,5 +135,4 @@ namespace AppB2C2.Controllers
             return RedirectToAction("AllItems");
         }
     }
-
 }

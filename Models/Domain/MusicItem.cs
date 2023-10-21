@@ -1,11 +1,15 @@
-﻿namespace AppB2C2.Models.Domain
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
+
+namespace AppB2C2.Models.Domain
 {
     public class MusicItem
     {
         public Guid Id { get; set; } // Key
         public string ItemTitle { get; set; } // Title on page for itenm
         public string ItemDescription { get; set; } // Short description for item
-        public string ImageUrl {  get; set; } // Url for image included in post
+        public string? ImageUrl {  get; set; } // Url for image included in post
         public string Artist { get; set; } // Associated artist
         public string ItemContent { get; set; } // Elaborated description of item
         public string UrlHandle { get; set; } // Url handle for making shring links easier

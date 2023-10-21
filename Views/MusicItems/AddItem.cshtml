@@ -2,7 +2,7 @@
 
 <h1>Add Music Item</h1>
 
-<form method="post" asp-action="AddItem">
+<form method="post" asp-action="AddItem" enctype="multipart/form-data">
     <div class="form-group">
         <label for="ItemTitle">Title:</label>
         <input type="text" id="ItemTitle" name="ItemTitle" class="form-control" required />
@@ -13,10 +13,10 @@
         <input type="text" id="ItemDescription" name="ItemDescription" class="form-control" required />
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         <label for="ImageUrl">Image URL:</label>
         <input type="text" id="ImageUrl" name="ImageUrl" class="form-control" required />
-    </div>
+    </div> *@
 
     <div class="form-group">
         <label for="Artist">Artist:</label>
@@ -46,6 +46,11 @@
     <div class="form-group">
         <label for="ItemValue">Item Value:</label>
         <input type="number" id="ItemValue" name="ItemValue" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ImageFile">Image: </label>
+        <input type="file" id="ImageFile" name="ImageFile"/>
     </div>
 
     <button type="submit" class="btn btn-primary">Add Item</button>
