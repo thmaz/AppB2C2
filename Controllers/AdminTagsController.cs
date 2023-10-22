@@ -26,7 +26,6 @@ namespace AppB2C2.Controllers
         [ActionName("Add")]
         public IActionResult Add(AddTagRequest addTagRequest)
         { 
-            // Mapping AddTagRequest to Tag domain model
                 var tag = new ItemTag
                 {
                     TagName = addTagRequest.TagName,
@@ -42,12 +41,7 @@ namespace AppB2C2.Controllers
 
         [HttpGet]
         public IActionResult Details(string tagName)
-        {
-            /*if (string.IsNullOrEmpty(tagName))
-            {
-                return BadRequest("Tag name required");
-            } */
-            
+        {   
             var tag = djDbContext.ItemTags.FirstOrDefault(t => t.TagName == tagName);
 
             if (tag == null)
@@ -71,6 +65,38 @@ namespace AppB2C2.Controllers
         {
             var allTags = djDbContext.ItemTags.ToList();
             return View("AllTags", allTags);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(string tagName)
+        {
+            var tag = djDbContext.ItemTags.FirstOrDefault(t => t.TagName == tagName);
+
+            if (tag == null)
+            {
+                Console.WriteLine($"Tag with tagName '{tagName}' not found.");
+                return NotFound();
+            }
+
+            return View("Delete", tag);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ConfirmDelete(string tagName)
+        {
+            var tag = djDbContext.ItemTags.FirstOrDefault(t => t.TagName == tagName);
+
+            if (tag == null)
+            {
+                Console.WriteLine($"Tag with tagName '{tagName}' not found.");
+                return NotFound();
+            }
+
+            djDbContext.ItemTags.Remove(tag);
+            djDbContext.SaveChanges();
+
+            return RedirectToAction("AllTags");
         }
 
     }

@@ -1,0 +1,17 @@
+﻿@model AppB2C2.Models.Domain.ItemTag
+
+<h2>Tag Deleted</h2>
+<p>The tag has been successfully deleted.</p>
+
+<dl>
+    <dt>Tag Name:</dt>
+    <dd>@Model.TagName</dd>
+
+    <dt>Display Name:</dt>
+    <dd>@Model.DisplayName</dd>
+
+    <dt>Tag Price:</dt>
+    <dd>@Model.TagPrice</dd>
+</dl>
+
+<a asp-action="AllTags" class="btn btn-primary">Back to All Tags</a>

@@ -1,0 +1,20 @@
+﻿@model AppB2C2.Models.Domain.ItemTag
+
+<h2>Delete Tag</h2>
+<p>Are you sure you want to delete this tag?</p>
+
+<dl>
+    <dt>Tag Name:</dt>
+    <dd>@Model.TagName</dd>
+
+    <dt>Display Name:</dt>
+    <dd>@Model.DisplayName</dd>
+
+    <dt>Tag Price:</dt>
+    <dd>@Model.TagPrice</dd>
+</dl>
+
+<form method="post" asp-action="ConfirmDelete" asp-route-tagName="@Model.TagName">
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="AllTags" class="btn btn-secondary">Cancel</a>
+</form>
