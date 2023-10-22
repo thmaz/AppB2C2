@@ -6,64 +6,68 @@ using Microsoft.AspNetCore.Mvc;
 namespace AppB2C2
 {
     public class Program
-	{
-		public static void Main(string[] args)
-		{
-			var builder = WebApplication.CreateBuilder(args);
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-			builder.Services.AddDbContext<DjDbContext>(
-				DbContextOptions =>
-				DbContextOptions.UseSqlServer(
-					builder.Configuration.GetConnectionString("DjDbConnectionString")));
-		
-			builder.Services.AddRazorPages();
-			
-			var app = builder.Build();
+            builder.Services.AddDbContext<DjDbContext>(
+                DbContextOptions =>
+                DbContextOptions.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DjDbConnectionString")));
 
-			if (!app.Environment.IsDevelopment())
-			{
-				app.UseExceptionHandler();
-				app.UseHsts();
-			}
+            builder.Services.AddRazorPages();
 
-			app.UseHttpsRedirection();
-			app.UseStaticFiles();
+            var app = builder.Build();
 
-			app.UseRouting();
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler();
+                app.UseHsts();
+            }
 
-			app.UseAuthorization();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-            app.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.UseRouting();
+
+            app.UseAuthorization();
 
             app.MapControllerRoute(
-				name: "musicitems",
-				pattern: "{controller=MusicItems}/{action=AllItems}/{id?}");
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
-				name: "musicitems",
-				pattern: "{controller=MusicItems}/{action=Edit}/{id?}");
+                name: "musicitems_all",
+                pattern: "{controller=MusicItems}/{action=AllItems}/{id?}");
 
             app.MapControllerRoute(
-				name: "musicitems_delete",
-				pattern: "{controller=MusicItems}/{action=Delete}/{id?}"); 
+                 name: "musicitems_search",
+                 pattern: "{controller=MusicItems}/{action=Search}/{id?}");
 
-			app.MapControllerRoute(
+            app.MapControllerRoute(
+                name: "musicitems_edit",
+                pattern: "{controller=MusicItems}/{action=Edit}/{id?}");
+
+            app.MapControllerRoute(
+                name: "musicitems_delete",
+                pattern: "{controller=MusicItems}/{action=Delete}/{id?}");
+
+            app.MapControllerRoute(
                 name: "musicitems_deleteconfirmed",
                 pattern: "{controller=MusicItems}/{action=DeleteConfirmed}/{id?}");
 
             app.MapControllerRoute(
-				name: "musicitems_details",
-				pattern: "{controller=MusicItems}/{action=DetailItem}/{id?}");
+                name: "musicitems_details",
+                pattern: "{controller=MusicItems}/{action=DetailItem}/{id?}");
 
             app.MapControllerRoute(
                 name: "admintags",
                 pattern: "{controller=AdminTags}/{action=AllTags}/{id?}");
-            
+
             app.MapFallbackToController("Index", "Home");
 
-			app.Run();
-		}
-	}
+            app.Run();
+        }
+    }
 }

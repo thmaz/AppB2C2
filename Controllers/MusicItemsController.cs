@@ -14,7 +14,7 @@ namespace AppB2C2.Controllers
     {
         private readonly DjDbContext djDbContext;
         private readonly IHostEnvironment hostEnvironment;
-        
+
         // GetTagPrice makes items of type CD 70% of TagValue and so forth ...
         private float GetTagPriceFactor(MusicItemType itemType)
         {
@@ -36,9 +36,9 @@ namespace AppB2C2.Controllers
             float purchaseValue = musicItem.ItemValue;
             float totalTagPrice = musicItem.ItemTags?.Sum(tag => tag.TagPrice * tagPriceFactor) ?? 0;
 
-            float difference  = purchaseValue - totalTagPrice;
-            float percentageDifference = (difference / purchaseValue) * 100;
-            
+            float difference = purchaseValue - totalTagPrice;
+            float percentageDifference = (purchaseValue/totalTagPrice) * 100;
+
             return percentageDifference;
         }
 
@@ -56,7 +56,7 @@ namespace AppB2C2.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddItem(AddMusicItemRequest addMusicItemRequest, List<Guid> tagIds, MusicItemType itemType) 
+        public IActionResult AddItem(AddMusicItemRequest addMusicItemRequest, List<Guid> tagIds, MusicItemType itemType)
         {
             var musicItem = new MusicItem
             {
@@ -66,17 +66,11 @@ namespace AppB2C2.Controllers
                 ItemContent = addMusicItemRequest.ItemContent,
                 DateAdded = addMusicItemRequest.DateAdded,
                 ItemValue = addMusicItemRequest.ItemValue,
-                ItemType = itemType
+                ItemType = addMusicItemRequest.ItemType
             };
 
-            // Logic for calculating TagPrice base on ItemType
             var tagPriceFactor = GetTagPriceFactor(itemType);
             musicItem.ItemTags = djDbContext.ItemTags.Where(tag => tagIds.Contains(tag.Id)).ToList();
-
-            foreach (var tag in musicItem.ItemTags)
-            {
-                tag.TagPrice *= tagPriceFactor;
-            }
 
             if (addMusicItemRequest.ImageFile != null && addMusicItemRequest.ImageFile.Length > 0)
             {
@@ -93,7 +87,7 @@ namespace AppB2C2.Controllers
             }
 
             musicItem.ItemTags = djDbContext.ItemTags.Where(tag => tagIds.Contains(tag.Id)).ToList();
-            
+
             djDbContext.MusicItems.Add(musicItem);
             djDbContext.SaveChanges();
 
@@ -101,7 +95,7 @@ namespace AppB2C2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(Guid itemId) 
+        public IActionResult Details(Guid itemId)
         {
             if (itemId == Guid.Empty)
             {
@@ -112,7 +106,7 @@ namespace AppB2C2.Controllers
                 .Include(item => item.ItemTags)
                 .FirstOrDefault(item => item.Id == itemId);
 
-            if (musicItem == null) 
+            if (musicItem == null)
             {
                 return NotFound();
             }
@@ -129,10 +123,10 @@ namespace AppB2C2.Controllers
                 DateAdded = musicItem.DateAdded,
                 ItemValue = musicItem.ItemValue,
                 Tags = musicItem.ItemTags.Select(tag => tag.TagName).ToList(),
-                
+
                 ItemType = musicItem.ItemType,
                 PriceDifferencePercentage = CalculatePriceDifferencePercentage(musicItem, tagPriceFactor),
-                TagPrice = musicItem.ItemTags?.FirstOrDefault()?.TagPrice * tagPriceFactor ?? 0
+                TagPrice = musicItem.ItemTags?.FirstOrDefault()?.TagPrice ?? 0
             };
 
             return View("DetailItem", musicItemDetailsViewModel);
@@ -148,7 +142,7 @@ namespace AppB2C2.Controllers
         [HttpGet]
         public IActionResult Delete(Guid itemId)
         {
-            if (itemId == Guid.Empty) 
+            if (itemId == Guid.Empty)
             {
                 return NotFound();
             }
@@ -202,7 +196,7 @@ namespace AppB2C2.Controllers
                 ItemContent = musicItem.ItemContent,
                 DateAdded = musicItem.DateAdded,
                 ItemValue = musicItem.ItemValue,
-               // Itemtype = itemtype
+                // Itemtype = itemtype
             };
 
             return View("EditItem", editViewModel);
@@ -211,34 +205,34 @@ namespace AppB2C2.Controllers
         [HttpPost]
         public IActionResult Edit(EditMusicViewModel editViewModel)
         {
-           /* if (ModelState.IsValid)
-            { */
-                var musicItem = djDbContext.MusicItems
-                    .Include(item => item.ItemTags)
-                    .FirstOrDefault(item => item.Id == editViewModel.Id);
+            /* if (ModelState.IsValid)
+             { */
+            var musicItem = djDbContext.MusicItems
+                .Include(item => item.ItemTags)
+                .FirstOrDefault(item => item.Id == editViewModel.Id);
 
-                if (musicItem == null)
-                {
-                    return NotFound();
-                }
+            if (musicItem == null)
+            {
+                return NotFound();
+            }
 
 
 
             musicItem.ItemTitle = editViewModel.ItemTitle;
-                musicItem.ItemDescription = editViewModel.ItemDescription;
-                musicItem.Artist = editViewModel.Artist;
-                musicItem.DateAdded = editViewModel.DateAdded;
-                musicItem.ItemValue = editViewModel.ItemValue;
+            musicItem.ItemDescription = editViewModel.ItemDescription;
+            musicItem.Artist = editViewModel.Artist;
+            musicItem.DateAdded = editViewModel.DateAdded;
+            musicItem.ItemValue = editViewModel.ItemValue;
 
-               // musicItem.ItemTags.Clear();
+            // musicItem.ItemTags.Clear();
 
-                /*foreach (var tagId in editViewModel.TagIds) 
-                {
-                    var tag = new ItemTag { Id = Guid.Parse(tagId) };
-                    musicItem.ItemTags.Add(tag);
-                } */
+            /*foreach (var tagId in editViewModel.TagIds) 
+            {
+                var tag = new ItemTag { Id = Guid.Parse(tagId) };
+                musicItem.ItemTags.Add(tag);
+            } */
 
-                djDbContext.SaveChanges();
+            djDbContext.SaveChanges();
 
             //return RedirectToAction("Details", new { itemId = musicItem.Id });
             //}
@@ -248,6 +242,15 @@ namespace AppB2C2.Controllers
                  .ToList(); */
 
             return RedirectToAction("AllItems");
+        }
+
+        public IActionResult Search(string searchTerm)
+        {
+            var searchResults = djDbContext.MusicItems
+                .Where(item => item.ItemTags.Any(tag => tag.TagName.Contains(searchTerm)))
+                .ToList();
+
+            return View("SearchResults", searchResults ?? new List<MusicItem>());
         }
     }
 }

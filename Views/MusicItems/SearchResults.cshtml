@@ -1,0 +1,38 @@
+﻿@model List<MusicItem>
+@using AppB2C2.Models.Domain;
+
+<style>
+    .item-container {
+        background-color: #f8f8f8; /* Subtle light background color */
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .item-title {
+        font-size: 1.5em; /* Larger font size for title */
+        color: #333; /* Dark text color */
+    }
+
+    .item-artist {
+        color: #666; /* Slightly darker text color for artist */
+    }
+
+    .details-link {
+        color: #007bff; /* Blue link color */
+        text-decoration: none;
+        margin-top: 5px;
+        display: block;
+    }
+</style>
+
+<h2>Search Results</h2>
+
+@foreach (var item in Model)
+{
+    <div class="item-container">
+        <h3 class="item-title">@item.ItemTitle</h3>
+        <p class="item-artist">@item.Artist</p>
+        <a class="details-link" asp-controller="MusicItems" asp-action="Details" asp-route-itemId="@item.Id">Details</a>
+    </div>
+}
