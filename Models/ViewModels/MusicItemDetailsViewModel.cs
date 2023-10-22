@@ -15,5 +15,8 @@ namespace AppB2C2.Models.ViewModels
         public float? ItemValue { get; set; } // Value of item
         public List<string> Tags { get; set; }
         public MusicItemType ItemType { get; set; }
+        public float PriceDifference { get; set; }
+        public float TagPrice {  get; set; }   
+        public float PriceDifferencePercentage { get; set; }
     }
 }

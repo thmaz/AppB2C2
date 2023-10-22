@@ -5,4 +5,9 @@ To do:
 -give item 3 attributes
 
 
-
+    <div style="margin-top: 20px;">
+        <h3>Price Difference in %:</h3>
+        <div style="padding: 8px; background-color: dimgray; color: #fff; border-radius: 5px; width:100px">
+            @Model.PriceDifferencePercentage.ToString("0.0")%
+        </div>
+    </div>

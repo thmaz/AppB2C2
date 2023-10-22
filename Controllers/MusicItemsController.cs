@@ -1,4 +1,5 @@
 ﻿using AppB2C2.Data;
+using AppB2C2.Migrations;
 using AppB2C2.Models.Domain;
 using AppB2C2.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,33 @@ namespace AppB2C2.Controllers
     {
         private readonly DjDbContext djDbContext;
         private readonly IHostEnvironment hostEnvironment;
+        
+        // GetTagPrice makes items of type CD 70% of TagValue and so forth ...
+        private float GetTagPriceFactor(MusicItemType itemType)
+        {
+            switch (itemType)
+            {
+                case MusicItemType.CD:
+                    return 0.7f;
+                case MusicItemType.Cassette:
+                    return 0.5f;
+                case MusicItemType.LP:
+                    return 1.2f;
+                default:
+                    return 1.0f;
+            }
+        }
+
+        private float CalculatePriceDifferencePercentage(MusicItem musicItem, float tagPriceFactor)
+        {
+            float purchaseValue = musicItem.ItemValue;
+            float totalTagPrice = musicItem.ItemTags?.Sum(tag => tag.TagPrice * tagPriceFactor) ?? 0;
+
+            float difference  = purchaseValue - totalTagPrice;
+            float percentageDifference = (difference / purchaseValue) * 100;
+            
+            return percentageDifference;
+        }
 
         public MusicItemsController(DjDbContext djDbContext, IHostEnvironment hostEnvironment)
         {
@@ -41,6 +69,15 @@ namespace AppB2C2.Controllers
                 ItemType = itemType
             };
 
+            // Logic for calculating TagPrice base on ItemType
+            var tagPriceFactor = GetTagPriceFactor(itemType);
+            musicItem.ItemTags = djDbContext.ItemTags.Where(tag => tagIds.Contains(tag.Id)).ToList();
+
+            foreach (var tag in musicItem.ItemTags)
+            {
+                tag.TagPrice *= tagPriceFactor;
+            }
+
             if (addMusicItemRequest.ImageFile != null && addMusicItemRequest.ImageFile.Length > 0)
             {
                 string uploadsFolder = Path.Combine(hostEnvironment.ContentRootPath, "wwwroot", "uploads");
@@ -60,11 +97,8 @@ namespace AppB2C2.Controllers
             djDbContext.MusicItems.Add(musicItem);
             djDbContext.SaveChanges();
 
-
-
             return RedirectToAction("AllItems", musicItem);
         }
-
 
         [HttpGet]
         public IActionResult Details(Guid itemId) 
@@ -83,6 +117,8 @@ namespace AppB2C2.Controllers
                 return NotFound();
             }
 
+            var tagPriceFactor = GetTagPriceFactor(musicItem.ItemType); // For displaying TagPrice in details
+
             var musicItemDetailsViewModel = new MusicItemDetailsViewModel
             {
                 ItemTitle = musicItem.ItemTitle,
@@ -93,7 +129,10 @@ namespace AppB2C2.Controllers
                 DateAdded = musicItem.DateAdded,
                 ItemValue = musicItem.ItemValue,
                 Tags = musicItem.ItemTags.Select(tag => tag.TagName).ToList(),
-                ItemType = musicItem.ItemType
+                
+                ItemType = musicItem.ItemType,
+                PriceDifferencePercentage = CalculatePriceDifferencePercentage(musicItem, tagPriceFactor),
+                TagPrice = musicItem.ItemTags?.FirstOrDefault()?.TagPrice * tagPriceFactor ?? 0
             };
 
             return View("DetailItem", musicItemDetailsViewModel);
@@ -183,7 +222,9 @@ namespace AppB2C2.Controllers
                     return NotFound();
                 }
 
-                musicItem.ItemTitle = editViewModel.ItemTitle;
+
+
+            musicItem.ItemTitle = editViewModel.ItemTitle;
                 musicItem.ItemDescription = editViewModel.ItemDescription;
                 musicItem.Artist = editViewModel.Artist;
                 musicItem.DateAdded = editViewModel.DateAdded;
