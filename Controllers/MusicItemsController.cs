@@ -2,7 +2,10 @@
 using AppB2C2.Models.Domain;
 using AppB2C2.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace AppB2C2.Controllers
 {
@@ -27,8 +30,6 @@ namespace AppB2C2.Controllers
         [HttpPost]
         public IActionResult AddItem(AddMusicItemRequest addMusicItemRequest, List<Guid> tagIds) 
         {
-           
-
             var musicItem = new MusicItem
             {
                 ItemTitle = addMusicItemRequest.ItemTitle,
@@ -76,9 +77,7 @@ namespace AppB2C2.Controllers
 
             var musicItem = djDbContext.MusicItems
                 .Include(item => item.ItemTags)
-                //.ThenInclude(tag => tag.TagName)
                 .FirstOrDefault(item => item.Id == itemId);
-            //.Find(itemId);
 
             if (musicItem == null) 
             {
@@ -139,6 +138,80 @@ namespace AppB2C2.Controllers
 
             djDbContext.MusicItems.Remove(musicItem);
             djDbContext.SaveChanges();
+            return RedirectToAction("AllItems");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid itemId, List<Guid> tagIds)
+        {
+            var musicItem = djDbContext.MusicItems
+                .Include(item => item.ItemTags)
+                .FirstOrDefault(item => item.Id == itemId);
+
+            if (musicItem == null)
+            {
+                return NotFound();
+            }
+
+            /*ViewBag.Tags = djDbContext.ItemTags
+                .Select(tag => new SelectListItem { Value = tag.Id.ToString(), Text = tag.TagName })
+                .ToList(); */
+
+            var editViewModel = new EditMusicViewModel
+            {
+                ItemTitle = musicItem.ItemTitle,
+                ItemDescription = musicItem.ItemDescription,
+                Artist = musicItem.Artist,
+                ItemContent = musicItem.ItemContent,
+                UrlHandle = musicItem.UrlHandle,
+                Visible = musicItem.Visible,
+                DateAdded = musicItem.DateAdded,
+                ItemValue = musicItem.ItemValue,
+            };
+
+            return View("EditItem", editViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditMusicViewModel editViewModel)
+        {
+           /* if (ModelState.IsValid)
+            { */
+                var musicItem = djDbContext.MusicItems
+                    .Include(item => item.ItemTags)
+                    .FirstOrDefault(item => item.Id == editViewModel.Id);
+
+                if (musicItem == null)
+                {
+                    return NotFound();
+                }
+
+                musicItem.ItemTitle = editViewModel.ItemTitle;
+                musicItem.ItemDescription = editViewModel.ItemDescription;
+                musicItem.Artist = editViewModel.Artist;
+                musicItem.ItemContent = editViewModel.ItemContent;
+                musicItem.UrlHandle = editViewModel.UrlHandle;
+                musicItem.Visible = editViewModel.Visible;
+                musicItem.DateAdded = editViewModel.DateAdded;
+                musicItem.ItemValue = editViewModel.ItemValue;
+
+               // musicItem.ItemTags.Clear();
+
+                /*foreach (var tagId in editViewModel.TagIds) 
+                {
+                    var tag = new ItemTag { Id = Guid.Parse(tagId) };
+                    musicItem.ItemTags.Add(tag);
+                } */
+
+                djDbContext.SaveChanges();
+
+            //return RedirectToAction("Details", new { itemId = musicItem.Id });
+            //}
+
+            /* ViewBag.Tags = djDbContext.ItemTags
+                 .Select(tag => new SelectListItem { Value = tag.Id.ToString(), Text = tag.TagName })
+                 .ToList(); */
+
             return RedirectToAction("AllItems");
         }
     }

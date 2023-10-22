@@ -40,8 +40,12 @@ namespace AppB2C2
             app.MapControllerRoute(
 				name: "musicitems",
 				pattern: "{controller=MusicItems}/{action=AllItems}/{id?}");
-            
-			app.MapControllerRoute(
+
+            app.MapControllerRoute(
+				name: "musicitems",
+				pattern: "{controller=MusicItems}/{action=Edit}/{id?}");
+
+            app.MapControllerRoute(
 				name: "musicitems_delete",
 				pattern: "{controller=MusicItems}/{action=Delete}/{id?}"); 
 

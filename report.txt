@@ -3,6 +3,7 @@ To do:
 -calc prices
 -rest api
 -search function
+-admin daily message
 
 @model AppB2C2.Models.ViewModels.MusicItemDetailsViewModel
 

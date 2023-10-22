@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppB2C2", "AppB2C2.csproj", "{46FE22D5-F57D-47AA-8465-D0E9091A7E6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceCalculatorAPI", "..\PriceCalculatorAPI\PriceCalculatorAPI.csproj", "{A8B970B4-34D3-4843-9920-5779581F56BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{46FE22D5-F57D-47AA-8465-D0E9091A7E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46FE22D5-F57D-47AA-8465-D0E9091A7E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46FE22D5-F57D-47AA-8465-D0E9091A7E6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B970B4-34D3-4843-9920-5779581F56BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8B970B4-34D3-4843-9920-5779581F56BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8B970B4-34D3-4843-9920-5779581F56BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8B970B4-34D3-4843-9920-5779581F56BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
