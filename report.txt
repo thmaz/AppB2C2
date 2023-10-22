@@ -1,37 +1,8 @@
 To do:
--add tags
 -calc prices
--rest api
+-api
 -search function
--admin daily message
+-give item 3 attributes
 
-@model AppB2C2.Models.ViewModels.MusicItemDetailsViewModel
-
-
-
-<div>
-    <h1>
-        @Model.ItemTitle
-    </h1>
-    <dl>
-
-
-        <dt>Description:</dt>
-        <dd>@Model.ItemDescription</dd>
-
-        <dt>Artis:</dt>
-        <dd>@Model.Artist</dd>
-
-        <dt>Item content:</dt>
-        <dd>@Model.ItemContent</dd>
-
-        <dt>Item value (in euros):</dt>
-        <dd>@Model.ItemValue</dd>
-    </dl>
-    @if (!string.IsNullOrEmpty(Model.ImageUrl))
-    {
-        <img src="@Url.Content(Model.ImageUrl)" alt="Item Image" style="max-width: 500px; height:auto"/>
-    }
-</div>
 
 

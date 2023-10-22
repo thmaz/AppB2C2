@@ -1,4 +1,6 @@
-﻿namespace AppB2C2.Models.ViewModels
+﻿using AppB2C2.Models.Domain;
+
+namespace AppB2C2.Models.ViewModels
 {
     public class DeleteItemRequest
     {
@@ -11,6 +13,7 @@
         public string UrlHandle { get; set; } // Url handle for making shring links easier
         public bool Visible { get; set; } // Set to hide or show item to other users
         public DateTime? DateAdded { get; set; } // Date posted
+        public MusicItemType ItemType { get; set; }
 
     }
 }

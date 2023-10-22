@@ -4,6 +4,7 @@ using AppB2C2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppB2C2.Migrations
 {
     [DbContext(typeof(DjDbContext))]
-    partial class DjDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231022100108_RemovedProperties")]
+    partial class RemovedProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +38,6 @@ namespace AppB2C2.Migrations
                     b.Property<string>("TagName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("TagPrice")
-                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -72,11 +72,15 @@ namespace AppB2C2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ItemType")
-                        .HasColumnType("int");
-
-                    b.Property<float>("ItemValue")
+                    b.Property<float?>("ItemValue")
                         .HasColumnType("real");
+
+                    b.Property<string>("UrlHandle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

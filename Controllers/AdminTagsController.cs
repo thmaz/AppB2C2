@@ -1,4 +1,5 @@
 ﻿using AppB2C2.Data;
+using AppB2C2.Migrations;
 using AppB2C2.Models.Domain;
 using AppB2C2.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,8 @@ namespace AppB2C2.Controllers
                 var tag = new ItemTag
                 {
                     TagName = addTagRequest.TagName,
-                    DisplayName = addTagRequest.DisplayName
+                    DisplayName = addTagRequest.DisplayName,
+                    TagPrice = addTagRequest.TagPrice
                 };
 
             djDbContext.ItemTags.Add(tag);
@@ -57,7 +59,8 @@ namespace AppB2C2.Controllers
             var tagDetailsViewModel = new TagDetailsViewModel
             {
                 TagName = tagName,
-                DetailName = tag.DisplayName
+                DetailName = tag.DisplayName,
+                TagPrice = tag.TagPrice
             };
 
             return View("Details", tagDetailsViewModel);

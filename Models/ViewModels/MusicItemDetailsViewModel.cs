@@ -1,4 +1,6 @@
-﻿namespace AppB2C2.Models.ViewModels
+﻿using AppB2C2.Models.Domain;
+
+namespace AppB2C2.Models.ViewModels
 {
     public class MusicItemDetailsViewModel
     {
@@ -12,5 +14,6 @@
         public DateTime? DateAdded { get; set; } // Date posted
         public float? ItemValue { get; set; } // Value of item
         public List<string> Tags { get; set; }
+        public MusicItemType ItemType { get; set; }
     }
 }

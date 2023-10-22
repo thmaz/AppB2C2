@@ -28,7 +28,7 @@ namespace AppB2C2.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddItem(AddMusicItemRequest addMusicItemRequest, List<Guid> tagIds) 
+        public IActionResult AddItem(AddMusicItemRequest addMusicItemRequest, List<Guid> tagIds, MusicItemType itemType) 
         {
             var musicItem = new MusicItem
             {
@@ -36,10 +36,9 @@ namespace AppB2C2.Controllers
                 ItemDescription = addMusicItemRequest.ItemDescription,
                 Artist = addMusicItemRequest.Artist,
                 ItemContent = addMusicItemRequest.ItemContent,
-                UrlHandle = addMusicItemRequest.UrlHandle,
-                Visible = addMusicItemRequest.Visible,
                 DateAdded = addMusicItemRequest.DateAdded,
-                ItemValue = addMusicItemRequest.ItemValue
+                ItemValue = addMusicItemRequest.ItemValue,
+                ItemType = itemType
             };
 
             if (addMusicItemRequest.ImageFile != null && addMusicItemRequest.ImageFile.Length > 0)
@@ -91,11 +90,10 @@ namespace AppB2C2.Controllers
                 ImageUrl = musicItem.ImageUrl,
                 Artist = musicItem.Artist,
                 ItemContent = musicItem.ItemContent,
-                UrlHandle = musicItem.UrlHandle,
-                Visible = musicItem.Visible,
                 DateAdded = musicItem.DateAdded,
                 ItemValue = musicItem.ItemValue,
-                Tags = musicItem.ItemTags.Select(tag => tag.TagName).ToList()
+                Tags = musicItem.ItemTags.Select(tag => tag.TagName).ToList(),
+                ItemType = musicItem.ItemType
             };
 
             return View("DetailItem", musicItemDetailsViewModel);
@@ -163,10 +161,9 @@ namespace AppB2C2.Controllers
                 ItemDescription = musicItem.ItemDescription,
                 Artist = musicItem.Artist,
                 ItemContent = musicItem.ItemContent,
-                UrlHandle = musicItem.UrlHandle,
-                Visible = musicItem.Visible,
                 DateAdded = musicItem.DateAdded,
                 ItemValue = musicItem.ItemValue,
+               // Itemtype = itemtype
             };
 
             return View("EditItem", editViewModel);
@@ -189,9 +186,6 @@ namespace AppB2C2.Controllers
                 musicItem.ItemTitle = editViewModel.ItemTitle;
                 musicItem.ItemDescription = editViewModel.ItemDescription;
                 musicItem.Artist = editViewModel.Artist;
-                musicItem.ItemContent = editViewModel.ItemContent;
-                musicItem.UrlHandle = editViewModel.UrlHandle;
-                musicItem.Visible = editViewModel.Visible;
                 musicItem.DateAdded = editViewModel.DateAdded;
                 musicItem.ItemValue = editViewModel.ItemValue;
 

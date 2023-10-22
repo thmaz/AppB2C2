@@ -4,5 +4,6 @@
     {
         public string TagName { get; set; }
         public string DetailName { get; set; }
+        public float TagPrice { get; set; }
     }
 }

@@ -24,16 +24,6 @@
     </div>
 
     <div class="form-group">
-        <label for="UrlHandle">URL Handle:</label>
-        <input type="text" id="UrlHandle" name="UrlHandle" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Visible">Visible:</label>
-        <input type="checkbox" id="Visible" name="Visible" />
-    </div>
-
-    <div class="form-group">
         <label for="DateAdded">Date Added:</label>
         <input type="date" id="DateAdded" name="DateAdded" class="form-control" required />
     </div>
@@ -56,6 +46,15 @@
                 <option value="@tag.Id">@tag.TagName</option>
             }
         </select>
+
+        <div class="form-group">
+            <label for="MusicItemType">Music Item Type:</label>
+            <select id="MusicItemType" name="MusicItemType" class="form-control" required>
+                <option value="Cd">CD</option>
+                <option value="Lp">LP</option>
+                <option value="Cassette">Cassette</option>
+            </select>
+        </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Add Item</button>
