@@ -35,8 +35,8 @@ namespace AppB2C2.Controllers
         {
             float purchaseValue = musicItem.ItemValue;
             float totalTagPrice = musicItem.ItemTags?.Sum(tag => tag.TagPrice * tagPriceFactor) ?? 0;
+            //float adjustedTotalTagPrice = totalTagPrice * tagPriceFactor;
 
-            float difference = purchaseValue - totalTagPrice;
             float percentageDifference = (purchaseValue/totalTagPrice) * 100;
 
             return percentageDifference;
@@ -126,7 +126,7 @@ namespace AppB2C2.Controllers
 
                 ItemType = musicItem.ItemType,
                 PriceDifferencePercentage = CalculatePriceDifferencePercentage(musicItem, tagPriceFactor),
-                TagPrice = musicItem.ItemTags?.FirstOrDefault()?.TagPrice ?? 0
+                TagPrice = (musicItem.ItemTags?.FirstOrDefault()?.TagPrice ?? 0) * tagPriceFactor
             };
 
             return View("DetailItem", musicItemDetailsViewModel);
