@@ -1,1 +1,3 @@
-# AppB2C2
+# MusicBase
+
+Web application displaying Web Application using MVC pattern for a school project
